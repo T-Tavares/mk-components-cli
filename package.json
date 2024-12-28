@@ -1,0 +1,31 @@
+{
+    "name": "mk-component-cli",
+    "version": "1.0.0",
+    "description": "CLI to create React JSX/TSX + modular CSS SASS, Fill them with a basic component structure. From a given name or list (For multiple Files)",
+    "bin": {
+        "mk-config": "./dist/bin/mk-config.js",
+        "mktsx": "./dist/bin/mktsx.js",
+        "mkjsx": "./dist/bin/mkjsx.js"
+    },
+    "scripts": {
+        "build": "npx tsc",
+        "postbuild": "chmod +x ./dist/bin/mkjsx.js && chmod +x ./dist/bin/mktsx.js && chmod +x ./dist/bin/mk-config.js"
+    },
+    "keywords": [
+        "react",
+        "mkjsx",
+        "automation",
+        "jsx",
+        "tsx"
+    ],
+    "author": "T-Tavares",
+    "license": "ISC",
+    "dependencies": {
+        "commander": "^12.1.0",
+        "figlet": "^1.8.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.2",
+        "typescript": "^5.7.2"
+    }
+}
