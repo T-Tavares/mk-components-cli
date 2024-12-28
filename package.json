@@ -8,7 +8,7 @@
         "mkjsx": "./dist/bin/mkjsx.js"
     },
     "scripts": {
-        "build": "npx tsc",
+        "build": "npx tsc && npx tsc -p tsconfig.mk-config.json",
         "postbuild": "chmod +x ./dist/bin/mkjsx.js && chmod +x ./dist/bin/mktsx.js && chmod +x ./dist/bin/mk-config.js"
     },
     "keywords": [

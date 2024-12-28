@@ -2,9 +2,9 @@
 
 import {Command} from 'commander';
 import {createFolder, createFile} from '../lib/core';
-import {writeComponent} from '../lib/file.options';
+import {writeComponent} from '../lib/write.options';
 import {firstCharUpperCase} from '../func/stringFunctions';
-import {mkconfig} from 'config/mkcli.config';
+import {mkconfig} from '../config/mkcli.config';
 
 const program = new Command();
 

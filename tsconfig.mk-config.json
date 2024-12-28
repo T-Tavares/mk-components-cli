@@ -7,11 +7,11 @@
         "module": "CommonJS",
         "esModuleInterop": true,
         "moduleResolution": "node",
-        "removeComments": true,
+        "removeComments": false,
         "baseUrl": "./",
         "paths": {
             "*": ["node_modules", "src/*"]
         }
     },
-    "exclude": ["src/config/mkcli.config.ts"]
+    "include": ["src/config/mkcli.config.ts"]
 }
