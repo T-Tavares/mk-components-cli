@@ -6,8 +6,9 @@ Just a simple CLI tool to create base Components for React in batch.
 
     npm i mk-components-cli --dev
 
-You'll need to use npx to run the commands
-or, my prefered way.
+You'll need to use npx to run the commands if install locally.
+
+or, my prefered way. (no npx needed)
 
     npm i -g mk-components-cli
 
@@ -31,7 +32,7 @@ there are three basic commands.
 
 For inline documentaion
 
-    mk-congif -h
+    mk-config -h
 
 ---
 

@@ -1,6 +1,6 @@
 {
     "name": "mk-component-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "CLI to create React JSX/TSX + modular CSS SASS, Fill them with a basic component structure. From a given name or list (For multiple Files)",
     "bin": {
         "mk-config": "./dist/bin/mk-config.js",
@@ -21,6 +21,7 @@
     "author": "T-Tavares",
     "license": "ISC",
     "dependencies": {
+        "-": "^0.0.1",
         "commander": "^12.1.0",
         "figlet": "^1.8.0"
     },
