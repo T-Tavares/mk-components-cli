@@ -31,11 +31,11 @@ export const writeComponent = ({filename, filetype = 'jsx'}: WriteComponent) => 
     let cssImport = '';
     if (css) {
         cssImport = mkconfig.css
-            ? `import ${cssAlias} from './${filename}.${cssModular ? 'modular.' : ''}${cssType}';\n`
+            ? `import ${cssAlias} from './${filename}.${cssModular ? 'module.' : ''}${cssType}';\n`
             : '';
     }
 
-    let className = `${cssModular ? `classname={${cssAlias}.container}` : `className={}`}`;
+    let className = `${cssModular ? `className={${cssAlias}.container}` : `className={}`}`;
 
     // ------------------- FINAL COMPONENT ------------------ //
 
