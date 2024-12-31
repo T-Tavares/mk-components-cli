@@ -1,0 +1,8 @@
+{
+    "functionType": "arrow",
+    "exportType": "es6",
+    "css": true,
+    "cssModular": true,
+    "cssType": "scss",
+    "cssAlias": "ss"
+}

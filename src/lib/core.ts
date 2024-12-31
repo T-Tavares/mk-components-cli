@@ -32,6 +32,8 @@ export function createFolder(componentName: string): void {
 // ------------------------------------------------------ //
 
 export function createFile({filename, language, content = ''}: CreateFileOptions): void {
+    // const mkconfig = getConfig();
+
     // ----------- RESOLVING PATHS AND FILE NAMES ----------- //
     const folderName = firstCharUpperCase(filename);
     const fileName = firstCharUpperCase(filename);
@@ -53,6 +55,24 @@ export function createFile({filename, language, content = ''}: CreateFileOptions
 
     if (!mkconfig.css) return; // Safe Guard -> If css is false, it wont create css file.
     if (language === 'css' || language === 'scss') fs.writeFileSync(cssPath, content, 'utf8');
+}
+
+// ------------------------------------------------------ //
+// ---------------- GET CONFIG FILE PATH ---------------- //
+// --------------------- GET CONFIG --------------------- //
+// ------------------------------------------------------ //
+
+export function getConfigPath(): string {
+    return path.resolve(__dirname, 'config', 'mkcli.config.json');
+}
+
+export function getConfig(): Config | void {
+    const configPath = fs.existsSync(getConfigPath());
+    if (!configPath) return console.log('Config file does not exist');
+
+    const config = fs.readFileSync(getConfigPath(), 'utf8');
+    console.log('Config', JSON.parse(config));
+    return JSON.parse(config);
 }
 
 // ------------------------------------------------------ //

@@ -12,6 +12,5 @@
         "paths": {
             "*": ["node_modules", "src/*"]
         }
-    },
-    "exclude": ["src/config/mkcli.config.ts"]
+    }
 }

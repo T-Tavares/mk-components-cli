@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createFolder = createFolder;
 exports.createFile = createFile;
+exports.getConfigPath = getConfigPath;
+exports.getConfig = getConfig;
 exports.updateConfig = updateConfig;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
@@ -36,6 +38,17 @@ function createFile({ filename, language, content = '' }) {
         return;
     if (language === 'css' || language === 'scss')
         fs_1.default.writeFileSync(cssPath, content, 'utf8');
+}
+function getConfigPath() {
+    return path_1.default.resolve(__dirname, 'config', 'mkcli.config.json');
+}
+function getConfig() {
+    const configPath = fs_1.default.existsSync(getConfigPath());
+    if (!configPath)
+        return console.log('Config file does not exist');
+    const config = fs_1.default.readFileSync(getConfigPath(), 'utf8');
+    console.log('Config', JSON.parse(config));
+    return JSON.parse(config);
 }
 function updateConfig(keyValObjInput) {
     const inputedKey = keyValObjInput.SetOption[0];
