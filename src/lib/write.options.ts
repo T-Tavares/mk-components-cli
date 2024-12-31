@@ -1,5 +1,5 @@
-import {mkconfig} from '../config/mkcli.config';
-import type {Config, WriteComponent} from '../types/types';
+import type {WriteComponent} from '../types/types';
+import {getConfig} from './config.options';
 
 /* 
     All functions related to writing files are resolved here.
@@ -10,7 +10,7 @@ import type {Config, WriteComponent} from '../types/types';
 // ------------------------------------------------------ //
 
 export const writeComponent = ({filename, filetype = 'jsx'}: WriteComponent) => {
-    const {css, cssModular, cssType, cssAlias, exportType, functionType} = mkconfig;
+    const {css, cssModular, cssType, cssAlias, exportType, functionType} = getConfig();
 
     // -------------------- EXPORTS TYPES ------------------- //
 
@@ -30,9 +30,7 @@ export const writeComponent = ({filename, filetype = 'jsx'}: WriteComponent) => 
 
     let cssImport = '';
     if (css) {
-        cssImport = mkconfig.css
-            ? `import ${cssAlias} from './${filename}.${cssModular ? 'module.' : ''}${cssType}';\n`
-            : '';
+        cssImport = css ? `import ${cssAlias} from "./${filename}.${cssModular ? 'module.' : ''}${cssType}";\n` : '';
     }
 
     let className = `${cssModular ? `className={${cssAlias}.container}` : `className={}`}`;
@@ -52,22 +50,4 @@ ${css ? exportDefault : ''}
 `;
 
     return component;
-};
-
-// ------------------------------------------------------ //
-// ------------------ WRITE CONFIG FILE ----------------- //
-// ------------------------------------------------------ //
-
-export const writeConfig = (configObj: Config): string => {
-    return `"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mkconfig = void 0;
-exports.mkconfig = {
-    functionType: '${configObj.functionType}',
-    exportType: '${configObj.exportType}',
-    css: ${configObj.css},
-    cssModular: ${configObj.cssModular},
-    cssType: '${configObj.cssType}',
-    cssAlias: '${configObj.cssAlias}',
-};`;
 };

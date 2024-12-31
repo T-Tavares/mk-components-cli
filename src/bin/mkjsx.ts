@@ -4,7 +4,7 @@ import {Command} from 'commander';
 import {createFolder, createFile} from '../lib/core';
 import {writeComponent} from '../lib/write.options';
 import {firstCharUpperCase} from '../func/stringFunctions';
-import {mkconfig} from '../config/mkcli.config';
+import {getConfig} from '../lib/config.options';
 
 const program = new Command();
 
@@ -17,6 +17,8 @@ program
     .version('1.0.0')
     .argument('<filenames...>', 'Core name of the file/component')
     .action((filenames: []) => {
+        const mkconfig = getConfig();
+
         filenames.forEach(file => {
             const filename = firstCharUpperCase(file);
             const content = writeComponent({filename, filetype: 'jsx'});

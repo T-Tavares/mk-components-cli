@@ -1,5 +1,5 @@
 import type {ValidKeyVal, ConfigOptions} from '../types/types';
-import {mkconfig} from '../config/mkcli.config';
+import {getConfig} from './config.options';
 
 // ------------------------------------------------------ //
 // ---------- USER INPUT CHECKS FOR SET-OPTIONS --------- //
@@ -38,7 +38,7 @@ export const checkForValidKeyValue = (keyValObjInput: ValidKeyVal) => {
 
     // ---------------- CHECK KEYS VALIDATION --------------- //
 
-    const configKeys = Object.keys(mkconfig);
+    const configKeys = Object.keys(getConfig());
 
     if (!configKeys.includes(inputedKey)) {
         console.error(`Key does not exist in config
