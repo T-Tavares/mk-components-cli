@@ -24,6 +24,8 @@ there are three basic commands.
 -   mktsx -> Creates Typescript files
 -   mkjsx -> Creates Javascript files
 
+For all three try to run -h for more insights on what they do and the options they offer.
+
 ---
 
 ---
@@ -53,6 +55,22 @@ That will not create CSS files when you use mktsx or mkjsx.
 
 ---
 
+### Editing your config at the source
+
+The following command will give you the source of your config file:
+
+    mk-config -path
+    mk-config -p
+
+You can edit it manually. Just be aware of the options you're adding or the CLI will behave on a unexpectedly way. The accepted options are:
+
+    functionType = 'arrow' | 'function';
+    exportType = 'named' | 'default';
+    css = boolean;
+    cssModular = boolean;
+    cssType = 'scss' | 'css';
+    cssAlias = 'Any string that makes sense as css alias';
+
 ---
 
 ### mktsx & mkjsx
@@ -60,11 +78,11 @@ That will not create CSS files when you use mktsx or mkjsx.
 Create Components files with respective CSS and a link to it.
 This CLI follows React best practices. For each component listed it'll create a folder and inside it a jsx and css files.
 
-Consider the config below
+#### Consider the config below
 
     {
         functionType: 'arrow',
-        exportType: 'es6',
+        exportType: 'named',
         css: true,
         cssModular: true,
         cssType: 'scss',
@@ -100,4 +118,50 @@ The css files will be empty. But the components files are filled with a basic st
         );
     };
 
-## Thoughts
+#### A different Config
+
+    {
+        functionType: 'function',
+        exportType: 'default',
+        css: true,
+        cssModular: false,
+        cssType: 'css',
+        cssAlias: 'style'
+    }
+
+If you run:
+
+    mktsx Nav Footer Sidebar
+
+That will give you the following.
+
+    .
+    ├── Footer
+    │   ├── Footer.css
+    │   └── Footer.jsx
+    ├── Nav
+    │   ├── Nav.css
+    │   └── Nav.jsx
+    └── Sidebar
+        ├── Sidebar.css
+        └── Sidebar.jsx
+
+With your component being.
+
+    import "./Nav.css";
+
+    function Nav() {
+        return (
+            <div className="">
+                Nav
+            </div>
+        );
+    };
+
+    export default Nav;
+
+# Thoughts
+
+Want to collaborate on this project ?
+Any ideas or bug to report?
+Send me a PM, open a issue or pull request :D

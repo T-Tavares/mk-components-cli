@@ -1,6 +1,6 @@
 {
     "functionType": "arrow",
-    "exportType": "es6",
+    "exportType": "named",
     "css": true,
     "cssModular": true,
     "cssType": "scss",

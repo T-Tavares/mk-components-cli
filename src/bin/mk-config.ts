@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import {Command} from 'commander';
-import {updateConfig, getConfigPath, getConfig} from '../lib/config.options';
+import {updateConfig, getConfigPath, getConfig} from '../lib/config.options.js';
 
 const program = new Command();
 
 const description = 'Edit Configuration file for mk components CLI';
-const configGuideMsg =
-    'To see current configuration use -c or --current.\nTo set a configuration option use -set-option <key> <value>, keys and values have to match the object of Current Config\nTo see path of configuration file use -p or --path';
+const configGuideMsg = `To see current configuration use -c or --current.
+    To set a configuration option use -set-option <key> <value>, keys and values have to match the object of Current Config
+    To see path of configuration file use -p or --path`;
 
 program
     .name('mk-config')
@@ -18,9 +19,9 @@ program
     .option('-p, --path', 'Show path of configuration file')
     .action(options => {
         if (!options.current && !options.SetOption && !options.path) console.log(configGuideMsg);
-        if (options.current) console.log('Current Config: ', getConfig());
+        if (options.current) console.log('\nCurrent Config: \n', getConfig());
         if (options.SetOption) updateConfig(options);
-        if (options.path) console.log('Path of Config file: ', getConfigPath());
+        if (options.path) console.log('\nPath of Config file: \n', getConfigPath());
     });
 
 program.parse();

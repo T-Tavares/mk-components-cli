@@ -1,5 +1,6 @@
+import {getConfig} from './config.options.js';
+
 import type {WriteComponent} from '../types/types';
-import {getConfig} from './config.options';
 
 /* 
     All functions related to writing files are resolved here.
@@ -14,39 +15,45 @@ export const writeComponent = ({filename, filetype = 'jsx'}: WriteComponent) => 
 
     // -------------------- EXPORTS TYPES ------------------- //
 
-    const exportModular = exportType === 'es6' ? 'export' : '';
-    const exportDefault = exportType === 'es6' ? '' : 'export default ' + filename + ';';
+    const exportModular = exportType === 'named' ? 'export ' : '';
+    const exportDefault = exportType === 'default' ? 'export default ' + filename + ';' : '';
 
     // -------------------- FUNCTION TYPE ------------------- //
 
+    /* 
+        If creating a tsx and function type is arrow it'll add the React.FC type.
+        That's the whole point of using tsx, right?
+        This won't work with default functions.
+    */
+
     const tsReactType = filetype === 'tsx' ? ': React.FC' : '';
 
-    const funtionTypeStr =
-        functionType === 'arrow'
-            ? `const ${filename}${filetype === 'tsx' ? tsReactType : ''} = () =>`
-            : `function ${filename}()`;
+    let functionTypeStr = '';
+    if (functionType === 'arrow') functionTypeStr = `const ${filename}${tsReactType} = () =>`;
+    if (functionType === 'function') functionTypeStr = `function ${filename}()`;
 
     // ---------------------- CSS IMPORT -------------------- //
 
     let cssImport = '';
-    if (css) {
-        cssImport = css ? `import ${cssAlias} from "./${filename}.${cssModular ? 'module.' : ''}${cssType}";\n` : '';
-    }
+    if (css && cssModular) cssImport = `import ${cssAlias} from "./${filename}.module.${cssType}";\n`;
+    if (css && !cssModular) cssImport = `import "./${filename}.${cssType}";\n`;
 
-    let className = `${cssModular ? `className={${cssAlias}.container}` : `className={}`}`;
+    let className = '';
+    if (css && cssModular) className = `className={${cssAlias}.container}`;
+    if (css && !cssModular) className = `className=""`;
 
     // ------------------- FINAL COMPONENT ------------------ //
 
-    const component = `${css ? cssImport : ''}
-${exportModular} ${funtionTypeStr} {
+    const component = `${cssImport}
+${exportModular}${functionTypeStr} {
     return (
-        <div ${css ? className : ''}>
+        <div ${className}>
             ${filename}
         </div>
     );
 };
 
-${css ? exportDefault : ''}
+${exportDefault}
 `;
 
     return component;

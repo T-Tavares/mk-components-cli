@@ -1,37 +1,35 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createFolder = createFolder;
-exports.createFile = createFile;
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
-const stringFunctions_1 = require("../func/stringFunctions");
-const config_options_1 = require("./config.options");
-function createFolder(componentName) {
-    const folderName = (0, stringFunctions_1.firstCharUpperCase)(componentName);
-    const folderPath = path_1.default.join(process.cwd(), folderName);
-    const doesFolderExist = fs_1.default.existsSync(folderPath);
-    if (doesFolderExist)
-        return console.log('Folder already exists');
-    fs_1.default.mkdirSync(folderPath);
+import path from 'path';
+import fs from 'fs';
+import { LOG } from './messages.options.js';
+import { firstCharUpperCase } from '../func/stringFunctions.js';
+import { getConfig } from './config.options.js';
+export function createFolder(componentName) {
+    const folderName = firstCharUpperCase(componentName);
+    const folderPath = path.join(process.cwd(), folderName);
+    fs.mkdirSync(folderPath);
 }
-function createFile({ filename, language, content = '' }) {
-    const mkconfig = (0, config_options_1.getConfig)();
-    const folderName = (0, stringFunctions_1.firstCharUpperCase)(filename);
-    const fileName = (0, stringFunctions_1.firstCharUpperCase)(filename);
-    const fileJSX = `${fileName}.${language}`;
-    const fileCSS = `${fileName}.${mkconfig.cssModular ? 'module.' : ''}${mkconfig.cssType}`;
-    const jsxPath = path_1.default.join(process.cwd(), folderName, fileJSX);
-    const cssPath = path_1.default.join(process.cwd(), folderName, fileCSS);
-    const doesFileExist = fs_1.default.existsSync(jsxPath) || fs_1.default.existsSync(cssPath);
-    if (doesFileExist)
-        return console.log('File already exists');
-    if (language === 'jsx' || language === 'tsx')
-        fs_1.default.writeFileSync(jsxPath, content, 'utf8');
-    if (!mkconfig.css)
-        return;
-    if (language === 'css' || language === 'scss')
-        fs_1.default.writeFileSync(cssPath, content, 'utf8');
+export function createComponentFile({ filename, language, content = '' }) {
+    const componentName = firstCharUpperCase(filename);
+    const fileName = `${componentName}.${language}`;
+    const filePath = path.join(process.cwd(), componentName, fileName);
+    const doesFileExist = fs.existsSync(filePath);
+    if (doesFileExist) {
+        LOG.alredyExists(fileName);
+        return 'fail';
+    }
+    fs.writeFileSync(filePath, content, 'utf8');
+    return 'pass';
+}
+export function createStyleFile({ filename, content = '' }) {
+    const config = getConfig();
+    const styleName = firstCharUpperCase(filename);
+    const fileName = `${styleName}.${config.cssModular ? 'module.' : ''}${config.cssType}`;
+    const filePath = path.join(process.cwd(), styleName, fileName);
+    const doesFileExist = fs.existsSync(filePath);
+    if (doesFileExist) {
+        LOG.alredyExists(fileName);
+        return 'fail';
+    }
+    fs.writeFileSync(filePath, content, 'utf8');
+    return 'pass';
 }

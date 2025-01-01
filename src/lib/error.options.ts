@@ -1,5 +1,7 @@
+import {getConfig} from './config.options.js';
+import {LOG} from './messages.options.js';
+
 import type {ValidKeyVal, ConfigOptions} from '../types/types';
-import {getConfig} from './config.options';
 
 // ------------------------------------------------------ //
 // ---------- USER INPUT CHECKS FOR SET-OPTIONS --------- //
@@ -22,7 +24,7 @@ import {getConfig} from './config.options';
 
 export const checkForNumOfArgs = (keyValObjInput: {SetOption: string[]}) => {
     if (keyValObjInput.SetOption!.length !== 2) {
-        console.error('Incorrect number of arguments, That should be a key and a value');
+        LOG.error('Incorrect number of arguments, That should be a key and a value');
         return false;
     }
     return true;
@@ -41,8 +43,8 @@ export const checkForValidKeyValue = (keyValObjInput: ValidKeyVal) => {
     const configKeys = Object.keys(getConfig());
 
     if (!configKeys.includes(inputedKey)) {
-        console.error(`Key does not exist in config
-        Available Options (keys): ${configKeys.join(', ')}`);
+        LOG.error(`Key does not exist in config`);
+        LOG.message(`Available Options (keys): ${configKeys.join(', ')}`);
         return false;
     }
 
@@ -50,7 +52,7 @@ export const checkForValidKeyValue = (keyValObjInput: ValidKeyVal) => {
 
     const mkConfigOptions = {
         functionType: ['arrow', 'function'],
-        exportType: ['modular', 'commonjs'],
+        exportType: ['named', 'default'],
         css: ['true', 'false'],
         cssModular: ['true', 'false'],
         cssType: ['css', 'scss'],
@@ -59,7 +61,8 @@ export const checkForValidKeyValue = (keyValObjInput: ValidKeyVal) => {
     const validValues = mkConfigOptions[inputedKey as keyof ConfigOptions];
 
     if (inputedKey !== 'cssAlias' && !validValues.includes(inputedValue as never)) {
-        console.error(`Invalid value for ${inputedKey}. Available options: ${validValues.join(', ')}`);
+        LOG.error(`Invalid value for ${inputedKey}.`);
+        LOG.message(`Available options: ${validValues.join(', ')}`);
         return false;
     }
 

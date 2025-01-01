@@ -5,3 +5,4 @@ DS_Store
 dist
 .env.local
 clean-build.sh
+build-test.sh

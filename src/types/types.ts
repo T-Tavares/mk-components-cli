@@ -6,7 +6,7 @@ type CSStype = 'scss' | 'css';
 export type FileType = SXtype & CSStype;
 
 type FunctionType = 'arrow' | 'function';
-type ExportType = 'es6' | 'commonjs';
+type ExportType = 'named' | 'default';
 type CSS = boolean;
 type CSSModular = boolean;
 type CSSType = 'scss' | 'css';
@@ -39,13 +39,16 @@ export interface ValidKeyVal {
 
 // --------------------- CORE TYPES --------------------- //
 
-export interface CreateFileOptions {
+export type CreateFile = {
     filename: string;
-    language: 'css' | 'scss' | 'jsx' | 'tsx';
     content?: string;
-}
+};
+
+export type CreateFileComponent = CreateFile & {language: 'jsx' | 'tsx'};
 
 export type WriteComponent = {
     filename: string;
     filetype: 'jsx' | 'tsx';
 };
+
+export type HasFileWrite = 'pass' | 'fail';

@@ -1,8 +1,11 @@
 import path from 'path';
 import fs from 'fs';
-import {checkForNumOfArgs, checkForValidKeyValue} from './error.options';
+import {fileURLToPath} from 'url';
+
+import {checkForNumOfArgs, checkForValidKeyValue} from './error.options.js';
 
 import type {Config, ValidKeyVal} from '../types/types';
+import {LOG} from './messages.options.js';
 
 // ------------------------------------------------------ //
 // ---------------- GET CONFIG FILE PATH ---------------- //
@@ -10,6 +13,9 @@ import type {Config, ValidKeyVal} from '../types/types';
 // ------------------------------------------------------ //
 
 export function getConfigPath(): string {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
     return path.resolve(__dirname, '..', 'config', 'mkcli.config.json');
 }
 
@@ -52,7 +58,7 @@ export function updateConfig(keyValObjInput: ValidKeyVal){
     // ------------ SAFE GUARD AND ERROR HANDLERS ----------- //
     
     if (!doesConfigExist) {
-        console.log('Config file does not exist: ', configPath)
+        LOG.error(`Config file does not exist: \n${configPath}`)
         return 
     };
 
@@ -63,6 +69,6 @@ export function updateConfig(keyValObjInput: ValidKeyVal){
 
     const configObj: Config = {...getConfig(), [inputedKey]: inputedValue};
     fs.writeFileSync(configPath, writeConfig(configObj), 'utf8');
-    console.log('Config Updated', `${inputedKey}: ${inputedValue}`);
+    LOG.success(`Config Updated ${inputedKey}: ${inputedValue}`);
 
 }
